@@ -1,6 +1,6 @@
 package com.example.foodxy.data.remote.home
 
-import com.example.foodxy.core.Resource
+import com.example.foodxy.core.Result
 import com.example.foodxy.data.model.Post
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
@@ -8,7 +8,7 @@ import kotlinx.coroutines.tasks.await
 
 class HomeScreenDataSource {
 
-suspend fun getLatestPost(): Resource<List<Post>>{
+suspend fun getLatestPost(): Result<List<Post>> {
 
         val postList = mutableListOf<Post>()
         val querySnapshot = FirebaseFirestore.getInstance().collection("post").get().await()
@@ -17,7 +17,7 @@ suspend fun getLatestPost(): Resource<List<Post>>{
                 postList.add(fbPost)
             }
         }
-      return Resource.Success(postList)
+      return Result.Success(postList)
     }
 
 }
