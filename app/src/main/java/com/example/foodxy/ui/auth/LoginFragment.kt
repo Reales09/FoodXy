@@ -32,6 +32,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         binding = FragmentLoginBinding.bind(view)
         isUserLoggedIn()
         doLogin()
+        gotoSignUpPage()
 
     }
 
@@ -64,6 +65,15 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             binding.editTextPassword.error = "Password is empty"
 
         }
+
+    }
+
+    private fun gotoSignUpPage(){
+
+        binding.txtSignup.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+        }
+
 
     }
 
