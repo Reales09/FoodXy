@@ -1,4 +1,4 @@
-package com.example.foodxy.data.remote
+package com.example.foodxy.data.remote.home
 
 import com.example.foodxy.core.Resource
 import com.example.foodxy.data.model.Post
