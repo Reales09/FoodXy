@@ -22,7 +22,7 @@
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@mipmap/foodxylogo"
+        android:src="@mipmap/logofoodxy"
         android:layout_gravity="center"
         />
 
