@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
+    android:padding="8dp"
+    android:paddingVertical="8dp"
     android:orientation="vertical">
 
     <LinearLayout
@@ -10,7 +12,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_margin="8dp">
+        android:layout_marginBottom="8dp"
+        >
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_picture"
@@ -40,6 +43,17 @@
         android:layout_width="match_parent"
         android:layout_height="250dp"
         tools:background="@mipmap/ic_launcher"/>
+
+    <TextView
+        android:id="@+id/post_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="this is descripion"
+        android:layout_marginTop="8dp"
+        android:maxLines="4"
+        android:ellipsize="end"
+
+        />
 
 
 
