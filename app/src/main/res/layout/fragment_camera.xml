@@ -8,18 +8,27 @@
     tools:context=".ui.camera.CameraFragment">
 
 <ImageView
-    android:id="@+id/image_add_photo"
+    android:id="@+id/post_image"
     android:layout_width="match_parent"
     android:layout_height="250dp"
     tools:background="@drawable/ic_baseline_add_a_photo_24"
     />
 
-    <EditText
-        android:id="@+id/etx_photo_description"
-        android:layout_marginTop="16dp"
+    <com.google.android.material.textfield.TextInputLayout
+
         android:layout_width="match_parent"
+        android:layout_marginTop="18dp"
         android:layout_height="wrap_content"
-        android:hint="Photo description"/>
+        android:hint="Description photo"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textAutoComplete"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btn_upload_photo"

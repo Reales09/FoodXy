@@ -37,14 +37,13 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private fun isUserLoggedIn(){
         firebaseAuth.currentUser?.let { user ->
-
-            if (user.displayName.isNullOrEmpty()){
+            if(user.displayName.isNullOrEmpty()) {
                 findNavController().navigate(R.id.action_loginFragment_to_setupProfileFragment)
 
+                Toast.makeText(requireContext(), "Debes agregar una imagen y nombre de usuario", Toast.LENGTH_LONG).show()
             }else{
                 findNavController().navigate(R.id.action_loginFragment_to_homeScreenFragment)
             }
-
         }
     }
 
@@ -94,14 +93,13 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 is Result.Success ->{
 
                     binding.progressBar.visibility = View.GONE
-                    findNavController().navigate(R.id.action_loginFragment_to_homeScreenFragment)
-                    Toast.makeText(requireContext(), "Bienvenido ${result.data?.email}", Toast.LENGTH_SHORT).show()
 
-                    if (result.data?.displayName.isNullOrEmpty()){
+                    if(result.data?.displayName.isNullOrEmpty()) {
                         findNavController().navigate(R.id.action_loginFragment_to_setupProfileFragment)
-
+                        Toast.makeText(requireContext(), "Debes agregar una imagen y nombre de usuario", Toast.LENGTH_LONG).show()
                     }else{
                         findNavController().navigate(R.id.action_loginFragment_to_homeScreenFragment)
+                        Toast.makeText(requireContext(), "Bienvenido ${result.data?.email}", Toast.LENGTH_SHORT).show()
                     }
 
                 }
