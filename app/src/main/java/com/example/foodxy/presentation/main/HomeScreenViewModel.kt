@@ -6,18 +6,23 @@ import androidx.lifecycle.liveData
 import com.example.foodxy.core.Result
 import com.example.foodxy.domain.home.HomeScreenRepo
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import java.lang.Exception
 
 class HomeScreenViewModel(private val repo: HomeScreenRepo): ViewModel() {
 
     fun fetchLatestPost() = liveData(Dispatchers.IO){
         emit(Result.Loading())
-        try {
-            emit(repo.getLatestPost())
-        }catch (e: Exception){
-
-            emit(Result.Failure(e))
+        kotlin.runCatching {
+            repo.getLatestPost()
+        }.onSuccess {flowlist ->
+            flowlist.collect {
+                emit(it)
+            }
+        }.onFailure {throwable ->
+            emit(Result.Failure(Exception(throwable.message)))
         }
+
     }
 }
 
