@@ -8,6 +8,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.foodxy.core.Result
 import com.example.foodxy.R
+import com.example.foodxy.core.hide
+import com.example.foodxy.core.show
 import com.example.foodxy.data.remote.home.HomeScreenDataSource
 import com.example.foodxy.databinding.FragmentHomeScreenBinding
 import com.example.foodxy.domain.home.HomeScreenRepoImpl
@@ -30,14 +32,25 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen) {
 
             when(result){
                 is  Result.Loading ->{
-                    binding.progressBar.visibility = View.VISIBLE
+                    binding.progressBar.show()
                 }
                 is  Result.Success ->{
-                    binding.progressBar.visibility = View.GONE
+                    binding.progressBar.hide()
+
+                    if(result.data.isEmpty()){
+
+                        binding.emptyContainer.show()
+                        return@Observer
+                    }else{
+                        binding.emptyContainer.hide()
+
+                    }
+
                     binding.rvHome.adapter = HomeScreenAdapter(result.data)
+
                 }
                 is  Result.Failure -> {
-                    binding.progressBar.visibility = View.GONE
+                    binding.progressBar.hide()
                     Toast.makeText(requireContext(), "Ocurrio un error ${result.exception}", Toast.LENGTH_SHORT).show()
                 }
             }

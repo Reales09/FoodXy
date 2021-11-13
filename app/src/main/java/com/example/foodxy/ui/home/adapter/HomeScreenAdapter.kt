@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.foodxy.core.BaseViewHolder
+import com.example.foodxy.core.TimeUtils
 import com.example.foodxy.core.hide
 import com.example.foodxy.data.model.Post
 import com.example.foodxy.databinding.PostItemViewBinding
@@ -43,7 +44,13 @@ class HomeScreenAdapter(private val postList: List<Post>): RecyclerView.Adapter<
                 binding.postDescription.text = item.post_description
             }
 
-            binding.postTimestamp.text = "Hace 2 horas"
+            val createdAt = (item.created_at?.time?.div(1000L))?.let {
+
+                TimeUtils.getTimeAgo(it.toInt())
+            }
+
+
+            binding.postTimestamp.text = createdAt
         }
     }
 
