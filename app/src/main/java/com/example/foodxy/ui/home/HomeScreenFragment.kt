@@ -10,6 +10,7 @@ import com.example.foodxy.core.Result
 import com.example.foodxy.R
 import com.example.foodxy.core.hide
 import com.example.foodxy.core.show
+import com.example.foodxy.data.model.Post
 import com.example.foodxy.data.remote.home.HomeScreenDataSource
 import com.example.foodxy.databinding.FragmentHomeScreenBinding
 import com.example.foodxy.domain.home.HomeScreenRepoImpl
@@ -17,7 +18,7 @@ import com.example.foodxy.presentation.HomeScreenViewModel
 import com.example.foodxy.presentation.HomeScreenViewModelFactory
 import com.example.foodxy.ui.home.adapter.HomeScreenAdapter
 
-class HomeScreenFragment : Fragment(R.layout.fragment_home_screen) {
+class HomeScreenFragment : Fragment(R.layout.fragment_home_screen), HomeScreenAdapter.OnPostClickerListener {
 
     private lateinit var binding: FragmentHomeScreenBinding
     private val viewModel by viewModels<HomeScreenViewModel>{HomeScreenViewModelFactory(
@@ -46,8 +47,7 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen) {
 
                     }
 
-                    binding.rvHome.adapter = HomeScreenAdapter(result.data)
-
+                    binding.rvHome.adapter = HomeScreenAdapter(result.data,this)
                 }
                 is  Result.Failure -> {
                     binding.progressBar.hide()
@@ -57,6 +57,10 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen) {
 
         })
 
+
+    }
+
+    override fun onLikeButtonClick(post: Post, liked: Boolean) {
 
     }
 
