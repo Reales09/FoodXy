@@ -7,6 +7,6 @@ import kotlinx.coroutines.flow.Flow
 
 class HomeScreenRepoImpl(private val dataSource: HomeScreenDataSource) : HomeScreenRepo {
 
-    override suspend fun getLatestPost(): Flow<Result<List<Post>>> = dataSource.getLatestPost()
+    override suspend fun getLatestPost(): Result<List<Post>> = dataSource.getLatestPost()
 
 }

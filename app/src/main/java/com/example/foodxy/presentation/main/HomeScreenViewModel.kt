@@ -15,10 +15,8 @@ class HomeScreenViewModel(private val repo: HomeScreenRepo): ViewModel() {
         emit(Result.Loading())
         kotlin.runCatching {
             repo.getLatestPost()
-        }.onSuccess {flowlist ->
-            flowlist.collect {
-                emit(it)
-            }
+        }.onSuccess {postList ->
+            emit(postList)
         }.onFailure {throwable ->
             emit(Result.Failure(Exception(throwable.message)))
         }
