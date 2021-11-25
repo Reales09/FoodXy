@@ -77,4 +77,14 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_left" />
     </fragment>
+    <fragment
+        android:id="@+id/storeFragment"
+        android:name="com.example.foodxy.storeFragment"
+        android:label="fragment_store"
+        tools:layout="@layout/fragment_store" />
+    <activity
+        android:id="@+id/mainActivity2"
+        android:name="com.example.foodxy.MainActivity2"
+        android:label="activity_main2"
+        tools:layout="@layout/activity_main2" />
 </navigation>

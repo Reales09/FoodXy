@@ -32,6 +32,8 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen), OnPostClickL
         )
     }
 
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeScreenBinding.bind(view)

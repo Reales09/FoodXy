@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id'com.google.gms.google-services'  // Google Services plugin
     id 'com.google.firebase.crashlytics' // Apply the Crashlytics Gradle plugin
+    id 'kotlin-kapt'
 
 
 }
@@ -64,7 +65,7 @@ dependencies {
     //Utils
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation "com.github.bumptech.glide:glide:4.12.0"
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    kapt 'com.github.bumptech.glide:compiler:4.11.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     //Viewmodel and live data ktx
@@ -80,6 +81,11 @@ dependencies {
 
     // Lifecycle
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0-alpha01"
+
+    // FirebaseUI for Firebase Auth
+    implementation 'com.firebaseui:firebase-ui-auth:8.0.0'
+
+
 
 
 }

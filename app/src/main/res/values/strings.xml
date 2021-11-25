@@ -2,4 +2,14 @@
     <string name="app_name">FoodXy</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="product_create">Crear</string>
+    <string name="product_msg_loading">Prepando todo…</string>
+    <string name="hint_name">Nombre del producto</string>
+    <string name="hint_description">Descripción</string>
+    <string name="hint_quantity">Cantidad</string>
+    <string name="hint_price">Precio</string>
+    <string name="product_empty_cart">carrito vacío</string>
+    <string name="product_view_cart">Ver carrito</string>
+
 </resources>
