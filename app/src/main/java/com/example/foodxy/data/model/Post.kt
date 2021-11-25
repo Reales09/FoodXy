@@ -7,7 +7,7 @@ import java.util.*
 
 data class Post (
     @Exclude @JvmField
-    val id: String= "",
+    var id: String= "",
     val profile_name: String = "",
     @ServerTimestamp
     var created_at: Date?=null,

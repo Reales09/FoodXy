@@ -14,17 +14,16 @@ import com.example.foodxy.core.hide
 import com.example.foodxy.data.model.Post
 import com.example.foodxy.databinding.PostItemViewBinding
 
-class HomeScreenAdapter(private val postList: List<Post>, private val onPostClickerListener: OnPostClickerListener) :
+class HomeScreenAdapter(private val postList: List<Post>, private val onPostClickerListener: OnPostClickListener) :
     RecyclerView.Adapter<BaseViewHolder<*>>() {
 
-    private var postClickerListener: OnPostClickerListener? = null
+    private var postClickListener: OnPostClickListener? = null
 
     init {
-        postClickerListener = onPostClickerListener
+        postClickListener = onPostClickerListener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
-
         val itemBinding =
             PostItemViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return HomeScreenViewHolder(itemBinding, parent.context)
@@ -38,38 +37,29 @@ class HomeScreenAdapter(private val postList: List<Post>, private val onPostClic
 
     override fun getItemCount(): Int = postList.size
 
-
     private inner class HomeScreenViewHolder(
         val binding: PostItemViewBinding,
         val context: Context
     ) : BaseViewHolder<Post>(binding.root) {
         override fun bind(item: Post) {
-
-
             setupProfileInfo(item)
             addPostTimeStamp(item)
             setupPostImage(item)
             setupPostDescription(item)
-            tinHeartIcon(item)
+            tintHeartIcon(item)
             setupLikeCount(item)
             setLikeClickAction(item)
-
         }
 
-
         private fun setupProfileInfo(post: Post) {
-            Glide.with(context).load(post.poster?.profile_pictures).centerCrop()
-                .into(binding.profilePicture)
+            Glide.with(context).load(post.poster?.profile_pictures).centerCrop().into(binding.profilePicture)
             binding.profileName.text = post.poster?.username
         }
 
         private fun addPostTimeStamp(post: Post) {
             val createdAt = (post.created_at?.time?.div(1000L))?.let {
-
                 TimeUtils.getTimeAgo(it.toInt())
             }
-
-
             binding.postTimestamp.text = createdAt
         }
 
@@ -79,60 +69,41 @@ class HomeScreenAdapter(private val postList: List<Post>, private val onPostClic
 
         private fun setupPostDescription(post: Post) {
             if (post.post_description.isEmpty()) {
-                binding.postDescription.hide()
+                binding.postDescription.visibility = View.GONE
             } else {
                 binding.postDescription.text = post.post_description
             }
         }
 
-        private fun tinHeartIcon(post: Post) {
-            if (!post.liked) {
-                binding.likeBtn.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        context,
-                        R.drawable.ic_baseline_favorite_border_24
-                    )
-                )
+        private fun tintHeartIcon(post: Post) {
+            if(!post.liked) {
+                binding.likeBtn.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_baseline_favorite_border_24))
                 binding.likeBtn.setColorFilter(ContextCompat.getColor(context, R.color.black))
-
             } else {
-                binding.likeBtn.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        context,
-                        R.drawable.ic_baseline_favorite_24
-                    )
-                )
+                binding.likeBtn.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_baseline_favorite_24))
                 binding.likeBtn.setColorFilter(ContextCompat.getColor(context, R.color.red_like))
             }
         }
 
         private fun setupLikeCount(post: Post) {
-            if (post.likes > 0) {
+            if(post.likes > 0) {
                 binding.likeCount.visibility = View.VISIBLE
                 binding.likeCount.text = "${post.likes} likes"
-
             } else {
                 binding.likeCount.visibility = View.GONE
-
             }
         }
 
         private fun setLikeClickAction(post: Post) {
             binding.likeBtn.setOnClickListener {
-                if (post.liked) post.apply { liked = false } else post.apply {
-                    liked = true
-                    tinHeartIcon(post)
-                    postClickerListener?.onLikeButtonClick(post, post.liked)
-                }
-
+                if(post.liked) post.apply { liked = false } else post.apply { liked = true }
+                tintHeartIcon(post)
+                postClickListener?.onLikeButtonClick(post, post.liked)
             }
-
-
         }
-
     }
+}
 
-    interface OnPostClickerListener {
-        fun onLikeButtonClick(post: Post, liked: Boolean)
-    }
+interface OnPostClickListener {
+    fun onLikeButtonClick(post: Post, liked: Boolean)
 }
