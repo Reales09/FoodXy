@@ -34,10 +34,6 @@ class storeFragment : Fragment(R.layout.fragment_store), OnProductListener {
 
     private lateinit var adapter: ProductAdapter
 
-
-
-
-
     private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         val response = IdpResponse.fromResultIntent(it.data)
 
