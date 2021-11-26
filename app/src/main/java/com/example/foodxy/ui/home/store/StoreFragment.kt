@@ -1,19 +1,16 @@
-package com.example.foodxy
+package com.example.foodxy.ui.home.store
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.foodxy.R
 import com.example.foodxy.core.Constants
 import com.example.foodxy.data.model.Product
 import com.example.foodxy.databinding.FragmentStoreBinding
-import com.example.foodxy.ui.home.OnProductListener
-import com.example.foodxy.ui.home.ProductAdapter
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
@@ -33,6 +30,10 @@ class storeFragment : Fragment(R.layout.fragment_store), OnProductListener {
     private lateinit var  firestoreListener: ListenerRegistration
 
     private lateinit var adapter: ProductAdapter
+
+
+
+
 
     private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         val response = IdpResponse.fromResultIntent(it.data)
@@ -66,6 +67,7 @@ class storeFragment : Fragment(R.layout.fragment_store), OnProductListener {
 
         configAuth()
         configRecyclerView()
+        configButtons()
     }
 
 
@@ -115,13 +117,20 @@ class storeFragment : Fragment(R.layout.fragment_store), OnProductListener {
                 GridLayoutManager.HORIZONTAL, false)
             adapter=this@storeFragment.adapter
         }
-        /* (1..20).forEach {
-             val product = Product(it.toString(), "Producto $it", "Este producto es el $it", "", it, it * 1.1 )
-             adapter.add(product)
-         }
 
-         */
     }
+
+    private fun configButtons(){
+
+        binding.btnViewCart.setOnClickListener {
+
+            val fragment = CartFragment()
+            fragmentManager?.let { it1 -> fragment.show(it1.beginTransaction(), CartFragment::class.java.simpleName) }
+        }
+
+    }
+
+
 
     /*
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -184,10 +193,4 @@ class storeFragment : Fragment(R.layout.fragment_store), OnProductListener {
     override fun onClick(product: Product) {
 
     }
-
-    override fun onLongClick(product: Product) {
-
-    }
-
-
 }

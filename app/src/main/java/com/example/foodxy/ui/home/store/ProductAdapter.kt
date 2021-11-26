@@ -1,4 +1,4 @@
-package com.example.foodxy.ui.home
+package com.example.foodxy.ui.home.store
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -13,7 +13,8 @@ import com.example.foodxy.databinding.ItemProductBinding
 
 
 class ProductAdapter (val productList: MutableList<Product>,
-                      private val listener: OnProductListener) :
+                      private val listener: OnProductListener
+) :
     RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
 
     private lateinit var context: Context
@@ -81,10 +82,6 @@ class ProductAdapter (val productList: MutableList<Product>,
         fun setListener(product: Product){
             binding.root.setOnClickListener{
                 listener.onClick(product)
-            }
-            binding.root.setOnLongClickListener {
-                listener.onLongClick(product)
-                true
             }
 
         }

@@ -3,19 +3,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".storeFragment">
+    tools:context=".ui.home.store.storeFragment">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvTotal"
+        android:layout_width="0dp"
+        android:text="@string/product_empty_cart"
+        android:textAppearance="?attr/textAppearanceHeadline5"
+        android:gravity="center_vertical"
+        android:layout_marginStart="@dimen/common_padding_default"
+        android:layout_marginEnd="@dimen/common_padding_min"
+        android:layout_height="@dimen/product_preview_cart_height"
+        app:layout_constraintEnd_toStartOf="@id/btnViewCart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnViewCart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/common_padding_default"
+        android:layout_marginStart="@dimen/common_padding_min"
+        android:text="@string/producto_view_cart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTotal"
+        app:layout_constraintTop_toTopOf="@id/tvTotal"
+
+
+        />
+
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nsvProducts"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:orientation="horizontal"
         android:visibility="gone"
         tools:visibility="visible"
+
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvTotal"
+        >
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"

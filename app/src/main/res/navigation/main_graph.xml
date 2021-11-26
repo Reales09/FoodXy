@@ -79,7 +79,7 @@
     </fragment>
     <fragment
         android:id="@+id/storeFragment"
-        android:name="com.example.foodxy.storeFragment"
+        android:name="com.example.foodxy.ui.home.store.storeFragment"
         android:label="fragment_store"
         tools:layout="@layout/fragment_store" />
     <activity
