@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <ImageButton
-        android:id="@+id/idSum"
+        android:id="@+id/ibSum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_add_circle"
@@ -26,13 +26,13 @@
         android:textAlignment="center"
         android:textAppearance="?attr/textAppearanceSubtitle1"
         tools:text="5"
-        app:layout_constraintEnd_toStartOf="@id/idSum"
+        app:layout_constraintEnd_toStartOf="@id/ibSum"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         />
 
     <ImageButton
-        android:id="@+id/idSub"
+        android:id="@+id/ibSub"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_remove_circle"
@@ -65,7 +65,7 @@
         android:maxLines="2"
         tools:text="Nombre del producto"
         app:layout_constraintStart_toEndOf="@id/imgProduct"
-        app:layout_constraintEnd_toStartOf="@id/idSub"
+        app:layout_constraintEnd_toStartOf="@id/ibSub"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         />

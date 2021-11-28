@@ -36,6 +36,9 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_loginFragment_to_storeActivity"
+            app:destination="@id/storeActivity" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -87,4 +90,9 @@
         android:name="com.example.foodxy.MainActivity2"
         android:label="activity_main2"
         tools:layout="@layout/activity_main2" />
+    <activity
+        android:id="@+id/storeActivity"
+        android:name="com.example.foodxy.ui.home.store.StoreActivity"
+        android:label="activity_store"
+        tools:layout="@layout/activity_store" />
 </navigation>

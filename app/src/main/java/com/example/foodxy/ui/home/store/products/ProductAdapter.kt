@@ -1,4 +1,4 @@
-package com.example.foodxy.ui.home.store
+package com.example.foodxy.ui.home.store.products
 
 import android.content.Context
 import android.view.LayoutInflater

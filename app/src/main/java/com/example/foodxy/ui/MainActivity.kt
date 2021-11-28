@@ -36,6 +36,8 @@ class MainActivity : AppCompatActivity(){
 
         observeDestinationChange()
 
+
+
     }
 
 
@@ -57,12 +59,10 @@ class MainActivity : AppCompatActivity(){
 
                 R.id.setupProfileFragment -> {
                     binding.bottomNavigationView.hide()
-                }
-
-                R.id.mainActivity2 -> {
+               }
+                R.id.storeActivity -> {
                     binding.bottomNavigationView.hide()
                 }
-
 
                 else ->{
                     binding.bottomNavigationView.show()

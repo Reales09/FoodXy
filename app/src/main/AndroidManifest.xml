@@ -16,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodXy">
         <activity
+            android:name=".ui.home.store.StoreActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity2"
             android:exported="false" />
         <activity

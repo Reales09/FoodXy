@@ -14,5 +14,8 @@
     <string name="producto_view_cart">Ver carrito</string>
     <string name="cart_title">Carrito de compra</string>
     <string name="cart_pay">Pagar</string>
+    <string name="detail_add_to_cart">Añadir al carrito</string>
+    <string name="detail_quantity">Disponibles: %1$d</string>
+    <string name="detail_total_price">Total: %1$.2f COP(%2$d X $%3$.2f)</string>
 
 </resources>
