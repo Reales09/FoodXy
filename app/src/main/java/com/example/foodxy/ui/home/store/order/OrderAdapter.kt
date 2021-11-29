@@ -13,6 +13,14 @@ class OrderAdapter(private val orderList: MutableList<Order>, private val listen
 
     private lateinit var context: Context
 
+    private val aValues: Array<String> by lazy {
+        context.resources.getStringArray(R.array.status_value)
+    }
+
+    private val aKeys: Array<Int> by lazy {
+        context.resources.getIntArray(R.array.status_key).toTypedArray()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         context = parent.context
         val view = LayoutInflater.from(context).inflate(R.layout.item_order, parent,false)
@@ -26,7 +34,7 @@ class OrderAdapter(private val orderList: MutableList<Order>, private val listen
 
         holder.setListener(order)
 
-        holder.binding.tvId.text = order.id
+        holder.binding.tvId.text = context.getString(R.string.order_id, order.id)
 
         var names =""
         order.products.forEach {
@@ -34,7 +42,12 @@ class OrderAdapter(private val orderList: MutableList<Order>, private val listen
         }
         holder.binding.tvProductName.text = names.dropLast(2)
 
-        holder.binding.tvTotalPrice.text = order.totalPrice.toString()
+        holder.binding.tvTotalPrice.text = context.getString(R.string.product_full_cart,order.totalPrice)
+
+        val index = aKeys.indexOf(order.status)
+        val statusStr = if (index != -1) aValues[index] else context.getString(R.string.order_status_unknown)
+
+        holder.binding.tvStatus.text = context.getString(R.string.order_status, statusStr)
 
     }
 
