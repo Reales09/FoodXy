@@ -21,8 +21,8 @@
     <string name="detail_quantity">Disponibles: %1$d</string>
     <string name="detail_total_price">&lt;b>&lt;big>Total: %1$.2f COP&lt;/big>&lt;/b>&lt;br/>(%2$d X $%3$.2f)</string>
     <string name="order_track_shipment">Seguir envío</string>
-    <string name="order_status">Estado:</string>
-    <string name="order_id">ID:</string>
+    <string name="order_status">Estado: %1$s</string>
+    <string name="order_id">ID: %1$s</string>
     <string name="order_chat_help">¿Necesitas ayuda?</string>
 
 </resources>
