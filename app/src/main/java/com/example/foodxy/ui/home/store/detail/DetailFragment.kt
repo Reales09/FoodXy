@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -74,7 +75,9 @@ class DetailFragment: Fragment() {
 
             it.etNewQuantity.setText(product.newQuantity.toString())
 
-            it.tvTotalPrice.text = getString(R.string.detail_total_price, product.totalPrice(), product.newQuantity, product.price)
+            val newQuantityStr = getString(R.string.detail_total_price, product.totalPrice(), product.newQuantity, product.price)
+
+            it.tvTotalPrice.text = HtmlCompat.fromHtml(newQuantityStr, HtmlCompat.FROM_HTML_MODE_LEGACY)
 
 
 
@@ -102,9 +105,18 @@ class DetailFragment: Fragment() {
                 }
                 binding.efab.setOnClickListener {
                     product.newQuantity = binding.etNewQuantity.text.toString().toInt()
+
+                    addToCart(product)
                 }
 
             }
+        }
+    }
+
+    private fun addToCart(product: Product){
+        (activity as? MainAux)?.let {
+            it.addProductToCart(product)
+            activity?.onBackPressed()
         }
     }
 

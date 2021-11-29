@@ -14,6 +14,7 @@ import com.example.foodxy.R
 import com.example.foodxy.core.Result
 import com.example.foodxy.data.remote.auth.AuthDataSource
 import com.example.foodxy.databinding.FragmentRegisterBinding
+
 import com.example.foodxy.domain.auth.AuthRepoImpl
 import com.example.foodxy.presentation.auth.AuthViewModel
 import com.example.foodxy.presentation.auth.AuthViewModelFactory

@@ -6,11 +6,17 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.foodxy.R
 import com.example.foodxy.core.Constants
 import com.example.foodxy.data.model.Product
 import com.example.foodxy.databinding.FragmentStoreBinding
+
+import com.example.foodxy.ui.home.store.products.OnProductListener
+import com.example.foodxy.ui.home.store.products.ProductAdapter
+import com.example.foodxy.ui.home.store.cart.CartFragment
+import com.example.foodxy.ui.home.store.detail.DetailFragment
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
@@ -31,7 +37,7 @@ class storeFragment : Fragment(R.layout.fragment_store), OnProductListener {
 
     private lateinit var adapter: ProductAdapter
 
-
+    private var productSelected: Product? = null
 
 
 
@@ -120,23 +126,25 @@ class storeFragment : Fragment(R.layout.fragment_store), OnProductListener {
 
     }
 
+
+
     private fun configButtons(){
 
         binding.btnViewCart.setOnClickListener {
 
             val fragment = CartFragment()
-            fragmentManager?.let { it1 -> fragment.show(it1.beginTransaction(), CartFragment::class.java.simpleName) }
+            fragmentManager?.let { it1 ->
+                fragment.show(it1.beginTransaction(), CartFragment::class.java.simpleName) }
         }
 
     }
-
-
 
     /*
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return super.onCreateOptionsMenu(menu)
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
@@ -191,6 +199,17 @@ class storeFragment : Fragment(R.layout.fragment_store), OnProductListener {
     }
 
     override fun onClick(product: Product) {
+        productSelected = product
 
+
+            val fragment = DetailFragment()
+            fragmentManager?.let {
+
+                it.beginTransaction()
+                    .add(R.id.containerMain,fragment)
+                    .addToBackStack(null)
+                    .commit()
+            }
     }
+
 }

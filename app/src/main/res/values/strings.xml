@@ -10,12 +10,19 @@
     <string name="hint_quantity">Cantidad</string>
     <string name="hint_price">Precio</string>
     <string name="product_empty_cart">carrito vacío</string>
+    <string name="product_full_cart">Total: $%1$.2f COP</string>
     <string name="product_view_cart">Ver carrito</string>
     <string name="producto_view_cart">Ver carrito</string>
+
     <string name="cart_title">Carrito de compra</string>
     <string name="cart_pay">Pagar</string>
+
     <string name="detail_add_to_cart">Añadir al carrito</string>
     <string name="detail_quantity">Disponibles: %1$d</string>
-    <string name="detail_total_price">Total: %1$.2f COP(%2$d X $%3$.2f)</string>
+    <string name="detail_total_price">&lt;b>&lt;big>Total: %1$.2f COP&lt;/big>&lt;/b>&lt;br/>(%2$d X $%3$.2f)</string>
+    <string name="order_track_shipment">Seguir envío</string>
+    <string name="order_status">Estado:</string>
+    <string name="order_id">ID:</string>
+    <string name="order_chat_help">¿Necesitas ayuda?</string>
 
 </resources>

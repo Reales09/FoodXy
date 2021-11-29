@@ -7,5 +7,11 @@
         android:title="Cerrar sesión"
         app:showAsAction="never"/>
 
+    <item
+        android:id="@+id/action_order_history"
+        android:title=""
+        android:icon="@drawable/ic_history"
+        app:showAsAction="ifRoom"/>
+
 
 </menu>

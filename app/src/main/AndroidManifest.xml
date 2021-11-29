@@ -16,10 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodXy">
         <activity
-            android:name=".ui.home.store.StoreActivity"
+            android:name=".ui.home.store.order.OrderActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity2"
+            android:name=".ui.home.store.StoreActivity"
             android:exported="false" />
         <activity
             android:name=".ui.MainActivity"

@@ -11,6 +11,7 @@
         <entry key="..\:/Users/rclar/AndroidStudioProjects/FoodXy/app/src/main/res/drawable/splashscreen.xml" value="0.221875" />
         <entry key="..\:/Users/rclar/AndroidStudioProjects/FoodXy/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/rclar/AndroidStudioProjects/FoodXy/app/src/main/res/layout/activity_main2.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/rclar/AndroidStudioProjects/FoodXy/app/src/main/res/layout/activity_order.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/rclar/AndroidStudioProjects/FoodXy/app/src/main/res/layout/activity_store.xml" value="0.168141592920354" />
         <entry key="..\:/Users/rclar/AndroidStudioProjects/FoodXy/app/src/main/res/layout/fragment_camera.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/rclar/AndroidStudioProjects/FoodXy/app/src/main/res/layout/fragment_cart.xml" value="0.36666666666666664" />
@@ -18,9 +19,10 @@
         <entry key="..\:/Users/rclar/AndroidStudioProjects/FoodXy/app/src/main/res/layout/fragment_home_screen.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/rclar/AndroidStudioProjects/FoodXy/app/src/main/res/layout/fragment_login.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/rclar/AndroidStudioProjects/FoodXy/app/src/main/res/layout/fragment_profile.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/rclar/AndroidStudioProjects/FoodXy/app/src/main/res/layout/fragment_register.xml" value="0.1" />
+        <entry key="..\:/Users/rclar/AndroidStudioProjects/FoodXy/app/src/main/res/layout/fragment_register.xml" value="0.22" />
         <entry key="..\:/Users/rclar/AndroidStudioProjects/FoodXy/app/src/main/res/layout/fragment_setup_profile.xml" value="0.33" />
         <entry key="..\:/Users/rclar/AndroidStudioProjects/FoodXy/app/src/main/res/layout/fragment_store.xml" value="0.22" />
+        <entry key="..\:/Users/rclar/AndroidStudioProjects/FoodXy/app/src/main/res/layout/item_order.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/rclar/AndroidStudioProjects/FoodXy/app/src/main/res/layout/item_product.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/rclar/AndroidStudioProjects/FoodXy/app/src/main/res/layout/item_product_car.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/rclar/AndroidStudioProjects/FoodXy/app/src/main/res/layout/post_item_view.xml" value="0.33" />

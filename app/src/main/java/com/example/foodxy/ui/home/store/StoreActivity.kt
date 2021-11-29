@@ -1,5 +1,6 @@
 package com.example.foodxy.ui.home.store
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -22,6 +23,7 @@ import com.example.foodxy.ui.home.store.products.OnProductListener
 import com.example.foodxy.ui.home.store.products.ProductAdapter
 import com.example.foodxy.ui.home.store.cart.CartFragment
 import com.example.foodxy.ui.home.store.detail.DetailFragment
+import com.example.foodxy.ui.home.store.order.OrderActivity
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
@@ -36,12 +38,10 @@ class StoreActivity : AppCompatActivity(), OnProductListener, MainAux {
 
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var authStateListener: FirebaseAuth.AuthStateListener
-
     private lateinit var adapter: ProductAdapter
-
     private lateinit var  firestoreListener: ListenerRegistration
-
     private var productSelected: Product? = null
+    private val productCarList = mutableListOf<Product>()
 
 
     private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -144,7 +144,7 @@ class StoreActivity : AppCompatActivity(), OnProductListener, MainAux {
 
     }
 
-/*
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return super.onCreateOptionsMenu(menu)
@@ -152,8 +152,12 @@ class StoreActivity : AppCompatActivity(), OnProductListener, MainAux {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
+
         when(item.itemId){
+            /*
             R.id.action_sign_out -> {
+
+
                 AuthUI.getInstance().signOut(this)
                     .addOnSuccessListener {
                         Toast.makeText(this, "Sesión teminada", Toast.LENGTH_SHORT).show()
@@ -167,13 +171,20 @@ class StoreActivity : AppCompatActivity(), OnProductListener, MainAux {
                             Toast.makeText(this, "No se pudo cerrar la sesión", Toast.LENGTH_SHORT).show()
                         }
                     }
+
+
             }
+            */
+
+            R.id.action_order_history -> startActivity(Intent(this,OrderActivity::class.java))
+
+
         }
 
         return super.onOptionsItemSelected(item)
     }
 
- */
+
 
 
     private fun configFirestoreRealtime() {
@@ -205,7 +216,15 @@ class StoreActivity : AppCompatActivity(), OnProductListener, MainAux {
     }
 
     override fun onClick(product: Product) {
-        productSelected = product
+
+        val index = productCarList.indexOf(product)
+        if (index != -1){
+            productSelected = productCarList[index]
+        }else{
+            productSelected = product
+        }
+
+
 
         val fragment = DetailFragment()
 
@@ -219,22 +238,42 @@ class StoreActivity : AppCompatActivity(), OnProductListener, MainAux {
     }
 
 
-    override fun getProductCart(): MutableList<Product> {
-
-        val productCarList = mutableListOf<Product>()
-
-        (1..9).forEach {
-            val product = Product(it.toString(), "Producto $it","this product is $it","",it,price=2.0+it)
-            productCarList.add(product)
-        }
-
-        return productCarList
-
-    }
+    override fun getProductCart(): MutableList<Product> = productCarList
 
     override fun getProductSelected(): Product? = productSelected
 
     override fun showButton(isVisible: Boolean) {
         binding.btnViewCart.visibility = if (isVisible) View.VISIBLE else View.GONE
+    }
+
+    override fun addProductToCart(product: Product) {
+
+        val index = productCarList.indexOf(product)
+        if (index != -1){
+            productCarList.set(index,product)
+        }else{
+            productCarList.add(product)
+        }
+
+        updateTotal()
+    }
+
+    override fun updateTotal() {
+        var total = 0.0
+        productCarList.forEach {product ->
+            total += product.totalPrice()
+        }
+
+        if (total == 0.0){
+
+            binding.tvTotal.text = getString(R.string.product_empty_cart)
+        }else{
+            binding.tvTotal.text = getString(R.string.product_full_cart, total)
+        }
+
+    }
+
+    override fun clearCart() {
+        productCarList.clear()
     }
 }

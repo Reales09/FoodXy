@@ -32,7 +32,7 @@ class ProductCartAdapter (private val productList: MutableList<Product>,
         holder.setListener(product)
 
         holder.binding.tvName.text = product.name
-        holder.binding.tvQuantity.text = product.quantity.toString()
+        holder.binding.tvQuantity.text = product.newQuantity.toString()
 
         Glide.with(context)
             .load(product.imgUrl)
@@ -52,6 +52,7 @@ class ProductCartAdapter (private val productList: MutableList<Product>,
         if (!productList.contains(product)){
             productList.add(product)
             notifyItemInserted(productList.size - 1)
+            calcTotal()
         }else{
 
             update(product)
@@ -63,6 +64,7 @@ class ProductCartAdapter (private val productList: MutableList<Product>,
         if (index != -1){
             productList.set(index, product)
             notifyItemChanged(index)
+            calcTotal()
         }
     }
 
@@ -71,8 +73,23 @@ class ProductCartAdapter (private val productList: MutableList<Product>,
         if (index != -1){
             productList.removeAt(index)
             notifyItemRemoved(index)
+            calcTotal()
         }
     }
+
+    private fun calcTotal(){
+        var result = 0.0
+
+        for (product in productList){
+
+            result += product.totalPrice()
+
+        }
+        listener.showTotal(result)
+
+    }
+
+    fun getProducts(): List<Product> = productList
 
 
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
@@ -84,11 +101,14 @@ class ProductCartAdapter (private val productList: MutableList<Product>,
 
 
             binding.ibSum.setOnClickListener {
+                product.newQuantity +=1
 
                 listener.setQuantity(product)
             }
 
             binding.ibSub.setOnClickListener {
+
+                product.newQuantity -=1
 
                 listener.setQuantity(product)
 

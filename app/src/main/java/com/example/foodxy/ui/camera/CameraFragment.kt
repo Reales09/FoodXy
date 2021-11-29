@@ -64,7 +64,7 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
                                 Toast.makeText(
                                     requireContext(),
                                     "Uploading photo...",
-                                    Toast.LENGTH_SHORT
+                                    Toast.LENGTH_LONG
                                 ).show()
                             }
                             is Result.Success -> {
