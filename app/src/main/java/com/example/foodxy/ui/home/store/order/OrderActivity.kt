@@ -8,6 +8,7 @@ import com.example.foodxy.R
 import com.example.foodxy.core.Constants
 import com.example.foodxy.data.model.Order
 import com.example.foodxy.databinding.ActivityOrderBinding
+import com.example.foodxy.ui.home.store.chat.ChatFragment
 import com.example.foodxy.ui.home.store.track.TrackFragment
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
@@ -74,6 +75,17 @@ class OrderActivity : AppCompatActivity(), OnOrderListener, OrderAux {
     }
 
     override fun onStartChat(order: Order) {
+
+        orderSelected = order
+
+        val fragment = ChatFragment()
+
+        supportFragmentManager
+            .beginTransaction()
+            .add(R.id.containerMain, fragment)
+            .addToBackStack(null)
+            .commit()
+
 
     }
 
