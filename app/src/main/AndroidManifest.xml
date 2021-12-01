@@ -17,7 +17,9 @@
         android:theme="@style/Theme.FoodXy">
         <activity
             android:name=".ui.home.store.order.OrderActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/order_title"
+            />
         <activity
             android:name=".ui.home.store.StoreActivity"
             android:exported="false" />

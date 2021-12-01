@@ -114,7 +114,7 @@ class DetailFragment: Fragment() {
     }
 
     private fun addToCart(product: Product){
-        (activity as? MainAux)?.let {
+        (requireActivity() as? MainAux)?.let {
             it.addProductToCart(product)
             activity?.onBackPressed()
         }
