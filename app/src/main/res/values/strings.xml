@@ -17,6 +17,10 @@
     <string name="cart_title">Carrito de compra</string>
     <string name="cart_pay">Pagar</string>
 
+    <string name="hint_chat">Escibe algo</string>
+    <string name="chat_title">Soporte</string>
+
+
     <string name="detail_add_to_cart">Añadir al carrito</string>
     <string name="detail_quantity">Disponibles: %1$d</string>
     <string name="detail_total_price">&lt;b>&lt;big>Total: %1$.2f COP&lt;/big>&lt;/b>&lt;br/>(%2$d X $%3$.2f)</string>
@@ -34,7 +38,9 @@
     <string name="order_status_unknown">Desconocido</string>
 
     <string name="track_title">Rastreo</string>
-    <string name="hint_chat">Escibe algo</string>
+
+    <string name="notification_channel_id_default">general</string>
+    <string name="notification_channel_name_default">Generales</string>
 
 
 </resources>

@@ -3,17 +3,21 @@ package com.example.foodxy.ui.home.store
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.edit
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.foodxy.R
+import com.example.foodxy.core.Constants
 import com.example.foodxy.core.hide
 import com.example.foodxy.core.show
 import com.example.foodxy.data.model.Product
@@ -31,6 +35,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
+import com.google.firebase.messaging.FirebaseMessaging
 
 class StoreActivity : AppCompatActivity(), OnProductListener, MainAux {
 
@@ -51,6 +56,30 @@ class StoreActivity : AppCompatActivity(), OnProductListener, MainAux {
             val user = FirebaseAuth.getInstance().currentUser
             if (user != null) {
                 Toast.makeText(this, "Bienvenido", Toast.LENGTH_SHORT).show()
+                val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+                val token = preferences.getString(Constants.PROP_TOKEN,null)
+
+                token?.let {
+                    val db = FirebaseFirestore.getInstance()
+                    val tokenMap = hashMapOf(Pair(Constants.PROP_TOKEN, token))
+
+                    db.collection(Constants.COLL_USERS)
+                        .document(user.uid)
+                        .collection(Constants.COLL_TOKENS)
+                        .add(tokenMap)
+                        .addOnSuccessListener {
+                            Log.i("registered token", token)
+                            preferences.edit {
+                                putString(Constants.PROP_TOKEN,null)
+                                    .apply()
+                            }
+                        }
+
+                        .addOnFailureListener {
+                            Log.i("no register token", token)
+                        }
+                }
+
             }
         } else{
             if (response == null){
@@ -78,6 +107,18 @@ class StoreActivity : AppCompatActivity(), OnProductListener, MainAux {
         configAuth()
         configRecyclerView()
         configButtons()
+
+        //FCM
+       /* FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (task.isSuccessful){
+                val token = task.result
+                Log.i("get token", token.toString())
+            }else{
+                Log.i("get token fail", task.exception.toString())
+            }
+        }
+
+        */
 
     }
 
@@ -154,7 +195,7 @@ class StoreActivity : AppCompatActivity(), OnProductListener, MainAux {
 
 
         when(item.itemId){
-            /*
+
             R.id.action_sign_out -> {
 
 
@@ -174,7 +215,6 @@ class StoreActivity : AppCompatActivity(), OnProductListener, MainAux {
 
 
             }
-            */
 
             R.id.action_order_history -> startActivity(Intent(this,OrderActivity::class.java))
 

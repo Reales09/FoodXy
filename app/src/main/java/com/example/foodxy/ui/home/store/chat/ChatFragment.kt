@@ -3,10 +3,13 @@ package com.example.foodxy.ui.home.store.chat
 import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.foodxy.R
 import com.example.foodxy.core.Constants
 import com.example.foodxy.data.model.Message
 import com.example.foodxy.data.model.Order
@@ -25,7 +28,7 @@ class ChatFragment: Fragment(), OnChatListener {
 
     private var binding: FragmentChatBinding? = null
 
-    private lateinit var  adapter: ChatAdapter
+    private lateinit var adapter: ChatAdapter
 
     private var order: Order? = null
 
@@ -35,7 +38,7 @@ class ChatFragment: Fragment(), OnChatListener {
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = FragmentChatBinding.inflate(inflater, container,false)
+        binding = FragmentChatBinding.inflate(inflater, container, false)
         binding?.let {
             return it.root
         }
@@ -53,7 +56,7 @@ class ChatFragment: Fragment(), OnChatListener {
     }
 
     private fun getOrder() {
-        order=(activity as? OrderAux)?.getOrderSelected()
+        order = (activity as? OrderAux)?.getOrderSelected()
         order?.let {
             setupRealtimeDatabase()
         }
@@ -190,12 +193,55 @@ class ChatFragment: Fragment(), OnChatListener {
 
     }
 
+    private fun setupActionBar() {
+        (activity as? AppCompatActivity)?.let {
+            it.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            it.supportActionBar?.title = getString(R.string.chat_title)
+            setHasOptionsMenu(true)
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        if (item.itemId == android.R.id.home)
+            activity?.onBackPressed()
+
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
     }
 
+    override fun onDestroy() {
+
+        (activity as? AppCompatActivity)?.let {
+            it.supportActionBar?.setDisplayHomeAsUpEnabled(false)
+            it.supportActionBar?.title = getString(R.string.order_title)
+            setHasOptionsMenu(false)
+        }
+        super.onDestroy()
+    }
+
     override fun deleteMessage(message: Message) {
 
+        order?.let {
+            val database = Firebase.database
+            val messageRef =
+                database.getReference(Constants.PATH_CHATS).child(it.id).child(message.id)
+            messageRef.removeValue { error, ref ->
+
+                binding?.let {
+                    if (error != null) {
+                        Snackbar.make(it.root, "Error al borrar mensaje", Snackbar.LENGTH_LONG)
+                            .show()
+
+                    } else {
+                        Snackbar.make(it.root, "Mensaje borrado", Snackbar.LENGTH_LONG).show()
+                    }
+                }
+            }
+        }
     }
 }
