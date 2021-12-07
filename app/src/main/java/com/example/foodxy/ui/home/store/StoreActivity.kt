@@ -32,6 +32,7 @@ import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
@@ -129,6 +130,7 @@ class StoreActivity : AppCompatActivity(), OnProductListener, MainAux {
 
             if (auth.currentUser != null) {
                // supportActionBar?.title = auth.currentUser?.displayName
+                updateTitle(auth.currentUser!!)
                 binding.llprogress.visibility = View.GONE
                 binding.nsvProducts.visibility = View.VISIBLE
 
@@ -315,5 +317,9 @@ class StoreActivity : AppCompatActivity(), OnProductListener, MainAux {
 
     override fun clearCart() {
         productCarList.clear()
+    }
+
+    override fun updateTitle(user: FirebaseUser) {
+        supportActionBar?.title = user.displayName
     }
 }

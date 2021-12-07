@@ -11,4 +11,6 @@
     <dimen name="chat_guideline_end">48dp</dimen>
     <dimen name="chat_stroke">1dp</dimen>
     <dimen name="chat_margin_horizontal">64dp</dimen>
+    <dimen name="image_profile_dime">160dp</dimen>
+    <dimen name="profile_width_textfield">260dp</dimen>
 </resources>

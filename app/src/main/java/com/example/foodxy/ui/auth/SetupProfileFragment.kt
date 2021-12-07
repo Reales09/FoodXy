@@ -63,6 +63,8 @@ class SetupProfileFragment : Fragment(R.layout.fragment_setup_profile) {
                             }
                         }
                     })
+                }else{
+                    Toast.makeText(requireContext(), "Debes de tomar una foto o escribir nombre de perfil", Toast.LENGTH_SHORT).show()
                 }
             }
         }

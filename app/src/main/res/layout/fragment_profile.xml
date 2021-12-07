@@ -1,14 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.profile.ProfileFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.profile.ProfileFragment"
+    android:background="@color/white"
+    android:focusable="true"
+    android:clickable="true"
+    android:orientation="vertical"
+    android:padding="@dimen/common_padding_default"
+    android:gravity="center_horizontal">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ImageButton
+
+        android:id="@+id/ibProfile"
+        android:layout_width="@dimen/image_profile_dime"
+        android:layout_height="@dimen/image_profile_dime"
+        android:background="?attr/selectableItemBackground"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+    android:layout_width="@dimen/profile_width_textfield"
+    android:layout_height="wrap_content"
+    android:hint="@string/hint_full_name"
+        android:layout_marginTop="@dimen/common_padding_min"
+    app:endIconMode="clear_text"
+    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+    >
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/etFullName"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Profile Fragment" />
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        />
+</com.google.android.material.textfield.TextInputLayout>
 
-</FrameLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="@dimen/profile_width_textfield"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_photo_url"
+        android:layout_marginTop="@dimen/common_padding_min"
+        app:endIconMode="clear_text"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPhotoUrl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textUri"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common_padding_min"
+        android:text="@string/profile_update"
+
+        />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvTakePhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/take_profile_picture"
+        android:textAppearance="?attr/textAppearanceSubtitle2"
+        android:layout_marginTop="@dimen/common_padding_default"/>
+
+
+
+
+</LinearLayout>
