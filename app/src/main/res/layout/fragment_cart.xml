@@ -54,6 +54,8 @@
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:text="@string/cart_pay"
+    app:iconTint="@color/white"
+    android:textColor="@color/white"
     app:icon="@drawable/ic_payment"
     app:iconGravity="textEnd"
     android:layout_margin="@dimen/common_padding_default"

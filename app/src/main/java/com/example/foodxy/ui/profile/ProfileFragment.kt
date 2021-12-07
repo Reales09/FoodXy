@@ -33,14 +33,6 @@ class ProfileFragment : Fragment() {
 
     private var binding: FragmentProfileBinding? = null
 
-    private val REQUEST_IMAGE_CAPTURE = 1
-    private var bitmap: Bitmap? = null
-
-    private val viewModel by viewModels<AuthViewModel> { AuthViewModelFactory(
-        AuthRepoImpl(
-        AuthDataSource()
-    )
-    ) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -110,7 +102,7 @@ class ProfileFragment : Fragment() {
 
         (activity as? AppCompatActivity)?.let {
             it.supportActionBar?.setDisplayHomeAsUpEnabled(false)
-            it.supportActionBar?.title = getString(R.string.profile_title)
+            //it.supportActionBar?.title = getString(R.string.profile_title)
             setHasOptionsMenu(false)
         }
 
@@ -143,7 +135,7 @@ private fun takePhoto(){
 
                     Toast.makeText(activity, "Usuario actualizado", Toast.LENGTH_SHORT).show()
                     (activity as? MainAux)?.updateTitle(user)
-                    activity?.onBackPressed()
+                    //activity?.onBackPressed()
                 }
                 .addOnFailureListener {
                     Toast.makeText(activity, "Error al actualizar usuario", Toast.LENGTH_SHORT).show()
@@ -167,20 +159,8 @@ private fun takePhoto(){
             setHasOptionsMenu(false)
         }
 
+
         super.onDestroy()
     }
-
-
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-            val imageBitmap = data?.extras?.get("data") as Bitmap
-            binding?.ibProfile?.setImageBitmap(imageBitmap)
-            bitmap = imageBitmap
-        }
-    }
-
-
 
 }

@@ -43,6 +43,8 @@
         android:text="@string/detail_add_to_cart"
         android:textAlignment="center"
         app:icon="@drawable/ic_add_shopping_cart"
+        app:iconTint="@color/white"
+        android:textColor="@color/white"
         app:iconGravity="textEnd"
         android:layout_marginBottom="@dimen/common_padding_default"
         app:layout_constraintStart_toStartOf="@+id/tvName"

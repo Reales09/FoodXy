@@ -36,6 +36,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
+import com.google.firebase.firestore.Query
 import com.google.firebase.messaging.FirebaseMessaging
 
 class StoreActivity : AppCompatActivity(), OnProductListener, MainAux {
@@ -45,59 +46,65 @@ class StoreActivity : AppCompatActivity(), OnProductListener, MainAux {
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var authStateListener: FirebaseAuth.AuthStateListener
     private lateinit var adapter: ProductAdapter
-    private lateinit var  firestoreListener: ListenerRegistration
+    private lateinit var firestoreListener: ListenerRegistration
     private var productSelected: Product? = null
     private val productCarList = mutableListOf<Product>()
+    private var queryPagination: Query? = null
 
 
-    private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        val response = IdpResponse.fromResultIntent(it.data)
+    private val resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            val response = IdpResponse.fromResultIntent(it.data)
 
-        if (it.resultCode == RESULT_OK) {
-            val user = FirebaseAuth.getInstance().currentUser
-            if (user != null) {
-                Toast.makeText(this, "Bienvenido", Toast.LENGTH_SHORT).show()
-                val preferences = PreferenceManager.getDefaultSharedPreferences(this)
-                val token = preferences.getString(Constants.PROP_TOKEN,null)
+            if (it.resultCode == RESULT_OK) {
+                val user = FirebaseAuth.getInstance().currentUser
+                if (user != null) {
+                    Toast.makeText(this, "Bienvenido", Toast.LENGTH_SHORT).show()
+                    val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+                    val token = preferences.getString(Constants.PROP_TOKEN, null)
 
-                token?.let {
-                    val db = FirebaseFirestore.getInstance()
-                    val tokenMap = hashMapOf(Pair(Constants.PROP_TOKEN, token))
+                    token?.let {
+                        val db = FirebaseFirestore.getInstance()
+                        val tokenMap = hashMapOf(Pair(Constants.PROP_TOKEN, token))
 
-                    db.collection(Constants.COLL_USERS)
-                        .document(user.uid)
-                        .collection(Constants.COLL_TOKENS)
-                        .add(tokenMap)
-                        .addOnSuccessListener {
-                            Log.i("registered token", token)
-                            preferences.edit {
-                                putString(Constants.PROP_TOKEN,null)
-                                    .apply()
+                        db.collection(Constants.COLL_USERS)
+                            .document(user.uid)
+                            .collection(Constants.COLL_TOKENS)
+                            .add(tokenMap)
+                            .addOnSuccessListener {
+                                Log.i("registered token", token)
+                                preferences.edit {
+                                    putString(Constants.PROP_TOKEN, null)
+                                        .apply()
+                                }
                             }
-                        }
 
-                        .addOnFailureListener {
-                            Log.i("no register token", token)
-                        }
+                            .addOnFailureListener {
+                                Log.i("no register token", token)
+                            }
+                    }
+
                 }
-
-            }
-        } else{
-            if (response == null){
-                Toast.makeText(this, "Hasta pronto", Toast.LENGTH_SHORT).show()
-                finish()
-            }else{
-                response.error?.let {
-                    if (it.errorCode == ErrorCodes.NO_NETWORK){
-                        Toast.makeText(this, "Sin Red", Toast.LENGTH_SHORT).show()
-                    }else{
-                        Toast.makeText(this, "Codigod de error: ${it.errorCode}", Toast.LENGTH_SHORT).show()
+            } else {
+                if (response == null) {
+                    Toast.makeText(this, "Hasta pronto", Toast.LENGTH_SHORT).show()
+                    finish()
+                } else {
+                    response.error?.let {
+                        if (it.errorCode == ErrorCodes.NO_NETWORK) {
+                            Toast.makeText(this, "Sin Red", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(
+                                this,
+                                "Codigod de error: ${it.errorCode}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
                 }
             }
-        }
 
-    }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -110,16 +117,16 @@ class StoreActivity : AppCompatActivity(), OnProductListener, MainAux {
         configButtons()
 
         //FCM
-       /* FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-            if (task.isSuccessful){
-                val token = task.result
-                Log.i("get token", token.toString())
-            }else{
-                Log.i("get token fail", task.exception.toString())
-            }
-        }
+        /* FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+             if (task.isSuccessful){
+                 val token = task.result
+                 Log.i("get token", token.toString())
+             }else{
+                 Log.i("get token fail", task.exception.toString())
+             }
+         }
 
-        */
+         */
 
     }
 
@@ -129,7 +136,7 @@ class StoreActivity : AppCompatActivity(), OnProductListener, MainAux {
         authStateListener = FirebaseAuth.AuthStateListener { auth ->
 
             if (auth.currentUser != null) {
-               // supportActionBar?.title = auth.currentUser?.displayName
+                // supportActionBar?.title = auth.currentUser?.displayName
                 updateTitle(auth.currentUser!!)
                 binding.llprogress.visibility = View.GONE
                 binding.nsvProducts.visibility = View.VISIBLE
@@ -164,25 +171,28 @@ class StoreActivity : AppCompatActivity(), OnProductListener, MainAux {
     }
 
     private fun configRecyclerView() {
-        adapter = ProductAdapter(mutableListOf(), this)
+        adapter = ProductAdapter(mutableListOf(Product()), this)
         binding.recyclerView.apply {
-            layoutManager = GridLayoutManager(this@StoreActivity,3,
-                GridLayoutManager.HORIZONTAL, false)
-            adapter=this@StoreActivity.adapter
+            layoutManager = GridLayoutManager(
+                this@StoreActivity, 3,
+                GridLayoutManager.HORIZONTAL, false
+            )
+            adapter = this@StoreActivity.adapter
         }
-        /* (1..20).forEach {
-             val product = Product(it.toString(), "Producto $it", "Este producto es el $it", "", it, it * 1.1 )
-             adapter.add(product)
-         }
 
-         */
     }
-    private fun configButtons(){
+
+    private fun configButtons() {
 
         binding.btnViewCart.setOnClickListener {
 
             val fragment = CartFragment()
-            supportFragmentManager?.let { it1 -> fragment.show(it1.beginTransaction(), CartFragment::class.java.simpleName) }
+            supportFragmentManager?.let { it1 ->
+                fragment.show(
+                    it1.beginTransaction(),
+                    CartFragment::class.java.simpleName
+                )
+            }
         }
 
     }
@@ -196,7 +206,7 @@ class StoreActivity : AppCompatActivity(), OnProductListener, MainAux {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
 
-        when(item.itemId){
+        when (item.itemId) {
 
             R.id.action_sign_out -> {
 
@@ -206,19 +216,20 @@ class StoreActivity : AppCompatActivity(), OnProductListener, MainAux {
                         Toast.makeText(this, "Sesión teminada", Toast.LENGTH_SHORT).show()
                     }
                     .addOnCompleteListener {
-                        if (it.isSuccessful){
+                        if (it.isSuccessful) {
                             binding.nsvProducts.visibility = View.GONE
                             binding.llprogress.visibility = View.VISIBLE
 
-                        }else{
-                            Toast.makeText(this, "No se pudo cerrar la sesión", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(this, "No se pudo cerrar la sesión", Toast.LENGTH_SHORT)
+                                .show()
                         }
                     }
 
 
             }
 
-            R.id.action_order_history -> startActivity(Intent(this,OrderActivity::class.java))
+            R.id.action_order_history -> startActivity(Intent(this, OrderActivity::class.java))
 
 
         }
@@ -227,51 +238,61 @@ class StoreActivity : AppCompatActivity(), OnProductListener, MainAux {
     }
 
 
-
-
     private fun configFirestoreRealtime() {
 
         val db = FirebaseFirestore.getInstance()
         val productRef = db.collection("products")
 
-        firestoreListener = productRef.addSnapshotListener { snapshots, error ->
+        firestoreListener = productRef
 
-            if (error != null){
+            .limit(6)
+            .addSnapshotListener { snapshots, error ->
 
-                Toast.makeText(this, "Error al consultar datos", Toast.LENGTH_SHORT).show()
+                if (error != null) {
 
-                return@addSnapshotListener
-            }
-            for (snapshot in snapshots!!.documentChanges){
-                val product = snapshot.document.toObject(Product::class.java)
-                product.id = snapshot.document.id
+                    Toast.makeText(this, "Error al consultar datos", Toast.LENGTH_SHORT).show()
 
-                when(snapshot.type){
-                    DocumentChange.Type.ADDED -> adapter.add(product)
-                    DocumentChange.Type.MODIFIED -> adapter.update(product)
-                    DocumentChange.Type.REMOVED -> adapter.delete(product)
-
+                    return@addSnapshotListener
                 }
+
+                snapshots?.let { items ->
+
+                    val lastItem = items.documents[items.size() - 1]
+                    queryPagination = productRef
+                        .startAfter(lastItem)
+                        .limit(6)
+
+                    for (snapshot in snapshots!!.documentChanges) {
+                        val product = snapshot.document.toObject(Product::class.java)
+                        product.id = snapshot.document.id
+
+                        when (snapshot.type) {
+                            DocumentChange.Type.ADDED -> adapter.add(product)
+                            DocumentChange.Type.MODIFIED -> adapter.update(product)
+                            DocumentChange.Type.REMOVED -> adapter.delete(product)
+
+                        }
+                    }
+                }
+
             }
-        }
 
     }
 
     override fun onClick(product: Product) {
 
         val index = productCarList.indexOf(product)
-        if (index != -1){
+        if (index != -1) {
             productSelected = productCarList[index]
-        }else{
+        } else {
             productSelected = product
         }
-
 
 
         val fragment = DetailFragment()
 
         supportFragmentManager.beginTransaction()
-            .add(R.id.containerMain,fragment)
+            .add(R.id.containerMain, fragment)
             .addToBackStack(null)
             .commit()
 
@@ -291,9 +312,9 @@ class StoreActivity : AppCompatActivity(), OnProductListener, MainAux {
     override fun addProductToCart(product: Product) {
 
         val index = productCarList.indexOf(product)
-        if (index != -1){
-            productCarList.set(index,product)
-        }else{
+        if (index != -1) {
+            productCarList.set(index, product)
+        } else {
             productCarList.add(product)
         }
 
@@ -302,14 +323,14 @@ class StoreActivity : AppCompatActivity(), OnProductListener, MainAux {
 
     override fun updateTotal() {
         var total = 0.0
-        productCarList.forEach {product ->
+        productCarList.forEach { product ->
             total += product.totalPrice()
         }
 
-        if (total == 0.0){
+        if (total == 0.0) {
 
             binding.tvTotal.text = getString(R.string.product_empty_cart)
-        }else{
+        } else {
             binding.tvTotal.text = getString(R.string.product_full_cart, total)
         }
 
@@ -321,5 +342,49 @@ class StoreActivity : AppCompatActivity(), OnProductListener, MainAux {
 
     override fun updateTitle(user: FirebaseUser) {
         supportActionBar?.title = user.displayName
+    }
+
+    override fun loadMore() {
+
+        val db = FirebaseFirestore.getInstance()
+        val productRef = db.collection("products")
+
+
+        queryPagination?.let {
+
+            it.addSnapshotListener { snapshots, error ->
+
+                if (error != null) {
+
+                    Toast.makeText(this, "Error al consultar datos", Toast.LENGTH_SHORT).show()
+
+                    return@addSnapshotListener
+                }
+
+                snapshots?.let { items ->
+
+                    val lastItem = items.documents[items.size() - 1]
+                    queryPagination = productRef
+                        .startAfter(lastItem)
+                        .limit(6)
+
+                    for (snapshot in snapshots!!.documentChanges) {
+                        val product = snapshot.document.toObject(Product::class.java)
+                        product.id = snapshot.document.id
+
+                        when (snapshot.type) {
+                            DocumentChange.Type.ADDED -> adapter.add(product)
+                            DocumentChange.Type.MODIFIED -> adapter.update(product)
+                            DocumentChange.Type.REMOVED -> adapter.delete(product)
+
+                        }
+                    }
+                }
+
+            }
+
+        }
+
+
     }
 }

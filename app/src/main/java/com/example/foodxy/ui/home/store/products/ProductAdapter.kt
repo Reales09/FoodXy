@@ -31,17 +31,28 @@ class ProductAdapter (val productList: MutableList<Product>,
 
         holder.setListener(product)
 
-        holder.binding.tvName.text = product.name
-        holder.binding.tvPrice.text = product.price.toString()
-        holder.binding.tvQuantity.text = product.quantity.toString()
+        if (product.id == null){
+            holder.binding.containeProduct.visibility = View.GONE
+            holder.binding.btnMore.visibility = View.VISIBLE
+        }else{
+            holder.binding.containeProduct.visibility = View.VISIBLE
+            holder.binding.btnMore.visibility = View.GONE
 
-        Glide.with(context)
-            .load(product.imgUrl)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .placeholder(R.drawable.ic_access_time)
-            .error(R.drawable.ic_broken_image)
-            .centerCrop()
-            .into(holder.binding.imgProduct)
+
+            holder.binding.tvName.text = product.name
+            holder.binding.tvPrice.text = product.price.toString()
+            holder.binding.tvQuantity.text = product.quantity.toString()
+
+            Glide.with(context)
+                .load(product.imgUrl)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.drawable.ic_access_time)
+                .error(R.drawable.ic_broken_image)
+                .centerCrop()
+                .into(holder.binding.imgProduct)
+
+        }
+
 
     }
 
@@ -49,8 +60,9 @@ class ProductAdapter (val productList: MutableList<Product>,
 
     fun add(product: Product){
         if (!productList.contains(product)){
-            productList.add(product)
-            notifyItemInserted(productList.size - 1)
+            //productList.add(product)
+                productList.add(productList.size -1, product)
+            notifyItemInserted(productList.size - 2)
         }else{
 
             update(product)
@@ -82,6 +94,10 @@ class ProductAdapter (val productList: MutableList<Product>,
         fun setListener(product: Product){
             binding.root.setOnClickListener{
                 listener.onClick(product)
+            }
+
+            binding.btnMore.setOnClickListener {
+                listener.loadMore()
             }
 
         }

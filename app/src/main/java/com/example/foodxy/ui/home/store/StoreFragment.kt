@@ -212,4 +212,8 @@ class storeFragment : Fragment(R.layout.fragment_store), OnProductListener {
             }
     }
 
+    override fun loadMore() {
+
+    }
+
 }

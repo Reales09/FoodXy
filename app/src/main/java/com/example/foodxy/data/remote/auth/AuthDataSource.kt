@@ -30,7 +30,7 @@ class AuthDataSource {
        return authResult.user
     }
 
-    suspend fun updateUserProfile(imageBitmap: Bitmap, username: String){
+    suspend fun updateUserProfile(imageBitmap: Bitmap){
 
         val user = FirebaseAuth.getInstance().currentUser
         val imageRef = FirebaseStorage.getInstance().reference.child("${user?.uid}/profile_picture")
@@ -38,7 +38,6 @@ class AuthDataSource {
         imageBitmap.compress(Bitmap.CompressFormat.PNG,100, baos)
         val dowloadUrl = imageRef.putBytes(baos.toByteArray()).await().storage.downloadUrl.await().toString()
         val profileUpdates = UserProfileChangeRequest.Builder()
-            .setDisplayName(username)
             .setPhotoUri(Uri.parse(dowloadUrl))
             .build()
 

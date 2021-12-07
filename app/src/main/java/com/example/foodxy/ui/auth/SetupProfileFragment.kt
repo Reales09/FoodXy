@@ -45,31 +45,29 @@ class SetupProfileFragment : Fragment(R.layout.fragment_setup_profile) {
         }
 
         binding.btnCreateProfile.setOnClickListener {
-            val username = binding.editTextUsername.text.toString().trim()
+
             val alertDialog = AlertDialog.Builder(requireContext()).setTitle("Uploading photo...").create()
             bitmap?.let {
-                if(username.isNotEmpty()) {
-                    viewModel.updateUserProfile(imageBitmap = it, username = username).observe(viewLifecycleOwner, { result ->
+
+                    viewModel.updateUserProfile(imageBitmap = it).observe(viewLifecycleOwner, { result ->
                         when(result) {
                             is Result.Loading -> {
                                 alertDialog.show()
                             }
                             is Result.Success -> {
                                 alertDialog.dismiss()
-                                findNavController().navigate(R.id.action_setupProfileFragment_to_homeScreenFragment)
+                                findNavController().navigate(R.id.action_setupProfileFragment_to_profileFragment)
                             }
                             is Result.Failure -> {
                                 alertDialog.dismiss()
                             }
                         }
                     })
-                }else{
-                    Toast.makeText(requireContext(), "Debes de tomar una foto o escribir nombre de perfil", Toast.LENGTH_SHORT).show()
                 }
             }
         }
 
-    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -80,4 +78,4 @@ class SetupProfileFragment : Fragment(R.layout.fragment_setup_profile) {
         }
     }
 
-    }
+}

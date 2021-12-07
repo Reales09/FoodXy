@@ -10,7 +10,9 @@ import com.example.foodxy.data.model.Order
 import com.example.foodxy.databinding.ActivityOrderBinding
 import com.example.foodxy.ui.home.store.chat.ChatFragment
 import com.example.foodxy.ui.home.store.track.TrackFragment
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.ktx.Firebase
 
 class OrderActivity : AppCompatActivity(), OnOrderListener, OrderAux {
@@ -43,21 +45,38 @@ class OrderActivity : AppCompatActivity(), OnOrderListener, OrderAux {
 
     private fun setupFirestore() {
 
-        val db = FirebaseFirestore.getInstance()
+        FirebaseAuth.getInstance().currentUser?.let {user ->
 
-        db.collection(Constants.COLL_REQUEST)
-            .get()
-            .addOnSuccessListener {
-                for (document in it){
-                    val order = document.toObject(Order::class.java)
-                    order.id = document.id
-                    adapter.add(order)
+            val db = FirebaseFirestore.getInstance()
+
+            db.collection(Constants.COLL_REQUEST)
+                //.orderBy(Constants.PROP_DATE,Query.Direction.ASCENDING)
+                //.orderBy(Constants.PROP_DATE,Query.Direction.DESCENDING)
+                //.whereIn(Constants.PROP_STATUS, listOf(1,4))
+                //.whereNotIn(Constants.PROP_STATUS, listOf(4))
+                //.whereGreaterThan(Constants.PROP_STATUS, 2)
+                //.whereLessThan(Constants.PROP_STATUS, 4)
+                //.whereEqualTo(Constants.PROP_STATUS,3)
+                //.whereGreaterThanOrEqualTo(Constants.PROP_STATUS,2)
+//                .orderBy(Constants.PROP_STATUS, Query.Direction.DESCENDING)
+//                .orderBy(Constants.PROP_STATUS, Query.Direction.ASCENDING)
+//                .whereLessThan(Constants.PROP_STATUS,4)
+                .whereEqualTo(Constants.PROP_CLIENT_ID, user.uid)
+                .orderBy(Constants.PROP_DATE,Query.Direction.DESCENDING)
+                .get()
+                .addOnSuccessListener {
+                    for (document in it){
+                        val order = document.toObject(Order::class.java)
+                        order.id = document.id
+                        adapter.add(order)
+                    }
                 }
-            }
-        
-            .addOnFailureListener {
-                Toast.makeText(this, "Errror al consultar los datos", Toast.LENGTH_SHORT).show()
-            }
+
+                .addOnFailureListener {
+                    Toast.makeText(this, "Errror al consultar los datos", Toast.LENGTH_SHORT).show()
+                }
+
+        }
 
     }
 

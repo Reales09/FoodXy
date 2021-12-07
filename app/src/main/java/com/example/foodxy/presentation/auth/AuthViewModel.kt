@@ -31,12 +31,12 @@ class AuthViewModel(private val repo: AuthRepo) : ViewModel() {
         }
     }
 
-    fun updateUserProfile(imageBitmap: Bitmap,username: String) = liveData(Dispatchers.IO) {
+    fun updateUserProfile(imageBitmap: Bitmap) = liveData(Dispatchers.IO) {
 
         emit(Result.Loading())
 
         try {
-            emit(Result.Success(repo.updateProfile(imageBitmap,username)))
+            emit(Result.Success(repo.updateProfile(imageBitmap)))
         }catch (e: Exception){
             emit(Result.Failure(e))
         }

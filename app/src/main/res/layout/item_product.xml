@@ -9,6 +9,7 @@
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/containeProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
@@ -30,6 +31,8 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/common_padding_min"
             tools:text="x54"
+            android:textColor="@color/white"
+            android:background="@drawable/background_chat_client"
             app:layout_constraintEnd_toEndOf="@+id/imgProduct"
             app:layout_constraintBottom_toBottomOf="@+id/imgProduct"
 
@@ -51,18 +54,26 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="@dimen/common_padding_min"
-            tools:text="$12.00 USD"
+            tools:text="$12.00 COP"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvName"
             app:layout_constraintBottom_toBottomOf="parent"
             />
 
-
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.button.MaterialButton
+
+        android:id="@+id/btnMore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Más"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:layout_gravity="center"
+
+        />
 
 
 </com.google.android.material.card.MaterialCardView>
