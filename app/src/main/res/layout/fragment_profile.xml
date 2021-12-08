@@ -20,6 +20,26 @@
         android:background="?attr/selectableItemBackground"
         />
 
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progress_bar"
+        android:layout_width="@dimen/image_profile_dime"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="invisible"
+        tools:progress="75"
+
+        />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvProgress"
+        android:layout_width="wrap_content"
+        tools:text="Subiendo al 75%"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common_padding_min"
+
+
+        />
+
     <com.google.android.material.textfield.TextInputLayout
     android:layout_width="@dimen/profile_width_textfield"
     android:layout_height="wrap_content"
@@ -37,22 +57,22 @@
         />
 </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="@dimen/profile_width_textfield"
-        android:layout_height="wrap_content"
-        android:hint="@string/hint_photo_url"
-        android:layout_marginTop="@dimen/common_padding_min"
-        app:endIconMode="clear_text"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        >
+<!--    <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:layout_width="@dimen/profile_width_textfield"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:hint="@string/hint_photo_url"-->
+<!--        android:layout_marginTop="@dimen/common_padding_min"-->
+<!--        app:endIconMode="clear_text"-->
+<!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"-->
+<!--        >-->
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etPhotoUrl"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textUri"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
+<!--        <com.google.android.material.textfield.TextInputEditText-->
+<!--            android:id="@+id/etPhotoUrl"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:inputType="textUri"-->
+<!--            />-->
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnUpdate"

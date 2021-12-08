@@ -14,6 +14,10 @@ object Constants {
     const val PROP_STATUS = "status"
     const val PROP_QUANTITY = "quantity"
 
+    //Storage
+    const val PATH_PRODUCT_IMAGES = "product_images"
+    const val MY_PHOTO ="profile_picture"
+
     //Realtime database
     const val PATH_CHATS = "chats"
 
