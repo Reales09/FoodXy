@@ -22,6 +22,7 @@ import com.example.foodxy.core.hide
 import com.example.foodxy.core.show
 import com.example.foodxy.data.model.Product
 import com.example.foodxy.databinding.ActivityStoreBinding
+import com.example.foodxy.settings.SettingsActivity
 
 import com.example.foodxy.ui.home.store.products.OnProductListener
 import com.example.foodxy.ui.home.store.products.ProductAdapter
@@ -73,10 +74,12 @@ class StoreActivity : AppCompatActivity(), OnProductListener, MainAux {
                             .add(tokenMap)
                             .addOnSuccessListener {
                                 Log.i("registered token", token)
-                                preferences.edit {
+                                /* preferences.edit {
                                     putString(Constants.PROP_TOKEN, null)
                                         .apply()
                                 }
+
+                                */
                             }
 
                             .addOnFailureListener {
@@ -117,18 +120,26 @@ class StoreActivity : AppCompatActivity(), OnProductListener, MainAux {
         configButtons()
 
         //FCM
-        /* FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-             if (task.isSuccessful){
-                 val token = task.result
-                 Log.i("get token", token.toString())
-             }else{
-                 Log.i("get token fail", task.exception.toString())
-             }
-         }
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
 
-         */
+                val token = task.result
+                val preferences = PreferenceManager.getDefaultSharedPreferences(this)
 
+                preferences.edit {
+                    putString(Constants.PROP_TOKEN, token)
+                        .apply()
+
+                }
+
+            Log.i("get token", token.toString())
+        }else{
+            Log.i("get token fail", task.exception.toString())
+        }
     }
+}
+
+
 
 
     private fun configAuth() {
@@ -230,6 +241,10 @@ class StoreActivity : AppCompatActivity(), OnProductListener, MainAux {
             }
 
             R.id.action_order_history -> startActivity(Intent(this, OrderActivity::class.java))
+
+            R.id.action_settings -> {
+                startActivity(Intent(this, SettingsActivity::class.java))
+            }
 
 
         }

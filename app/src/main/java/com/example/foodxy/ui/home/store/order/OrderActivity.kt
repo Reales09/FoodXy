@@ -1,5 +1,6 @@
 package com.example.foodxy.ui.home.store.order
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -30,9 +31,31 @@ class OrderActivity : AppCompatActivity(), OnOrderListener, OrderAux {
 
         setupRecyclerView()
         setupFirestore()
+        checkIntent(intent)
 
     }
 
+    private fun checkIntent(intent: Intent?) {
+
+        intent?.let{
+
+            val actionIntent = it.getIntExtra(Constants.ACTION_INTENT,0)
+            if (actionIntent == 1){
+
+            val id = intent.getStringExtra(Constants.PROP_ID) ?: ""
+            val status = intent.getIntExtra(Constants.PROP_STATUS,0)
+
+            orderSelected = Order(id =id, status = status)
+
+            val fragment = TrackFragment()
+            supportFragmentManager
+                .beginTransaction()
+                .add(R.id.containerMain, fragment)
+                .addToBackStack(null)
+                .commit()
+            }
+        }
+    }
 
 
     private fun setupRecyclerView() {

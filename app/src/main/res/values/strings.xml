@@ -47,6 +47,11 @@
     <string name="profile_title">Perfil de usuario</string>
     <string name="take_profile_picture">Tomar foto de perfil</string>
     <string name="update_profile">Tomar foto de perfil</string>
+    <string name="pref_fcm_title">Recibir notificaciones</string>
+    <string name="pref_offers_key">pref_offers</string>
+    <string name="pref_offers_title">Ofertas y promociones</string>
+    <string name="product_menu_setting">Configuración</string>
+    <string name="setting_topic_offers">topic_offers</string>
 
 
 </resources>
